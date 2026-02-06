@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>My Portfolio</title>
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+    <nav class="navbar">
+        <div class="logo">
+            <img src="logo.jpeg">
+            <span>My Portfolio</span>
+        </div>
+        <div class="nav-links">
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#skills">Skills</a>
+            <a href="#interest">Interests</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
+</header>
+
+<section id="home">
+    <h1>Hi I'm Khushi K Patel</h1>
+    <p>Building skills today to become a confident business leader tomorrow.</p>
+
+    <div class="profile-container">
+        <img src="profile1.jpeg" alt="Profile Image"><br>
+       
+        <a href="cv.pdf" class="cv-button">
+            <i class="fas fa-file-pdf"></i> View My CV
+        </a>
+    </div>
+</section>
+
+<section id="about">
+    <h1>About Me</h1>
+    <div class="about-container">
+        <div class="about-text">
+            <p>I am Khushi Patel, a motivated and responsible individual with a strong focus on learning, skill development, and professional growth. I am adaptable, detail‑oriented, and committed to building a solid academic and career foundation.</p>
+        </div>
+        <div class="about-image">
+            <img src="profile.jpg" alt="Profile Image">
+        </div>
+    </div>
+</section>
+
+<section id="skills">
+    <h1>My Skills</h1>
+    <div class="skills-grid">
+        <div class="skill-card">HTML</div>
+        <div class="skill-card">CSS</div>
+         <div class="skill-card">Javascript</div>
+        <div class="skill-card">Python</div>
+        <div class="skill-card">SQL</div>
+        
+</section>
+
+<section id="interest">
+    <h1>My Interests</h1>
+    <div class="interest-grid">
+        <div class="interest-card">
+            <img src="dance.jpg">
+            <h3>I am enthusiastic about Western dance and enjoy mastering new moves and choreography.</h3>
+        </div>
+        <div class="interest-card">
+            <img src="about2.jpg">
+            <h3>Exploring the world through travel fuels my curiosity and creativity.</h3>
+        </div>
+    </div>
+</section>
+
+<section id="contact">
+    <h1>Contact Me</h1>
+    <div class="contact-container">
+        <div class="contact-info">
+            <p><i class="fas fa-envelope"></i> khushi.k.p.26@gmail.com</p>
+            <p><i class="fas fa-phone"></i> +919380106110</p>
+        </div>
+        <form id="contactForm">
+            <input name="name" placeholder="Your Name">
+            <input name="email" placeholder="Your Email">
+            <textarea name="message" rows="5" placeholder="Your Message"></textarea>
+            <button type="submit">Send Message</button>
+        </form>
+    </div>
+</section>
+
+<footer>© 2026 Khushi K Patel</footer>
+<script>
+const sections = document.querySelectorAll("section");
+const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if(entry.isIntersecting){
+            entry.target.classList.add("show");
+        }
+    });
+}, { threshold: 0.2 });
+
+sections.forEach(sec => observer.observe(sec));
+</script>
+
+<script type="module">
+
+// ================= FIREBASE IMPORTS =================
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+import { 
+  getFirestore, 
+  collection, 
+  addDoc, 
+  doc, 
+  getDoc,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
+
+// ================= KHUSHI FIREBASE CONFIG =================
+const firebaseConfig = {
+  apiKey: "AIzaSyDiLCq8Tc3d2u0al0DiaZ2nTD54XJKQCJE",
+  authDomain: "khushi-portfolio-ae63b.firebaseapp.com",
+  projectId: "khushi-portfolio-ae63b",
+  storageBucket: "khushi-portfolio-ae63b.firebasestorage.app",
+  messagingSenderId: "530912177648",
+  appId: "1:530912177648:web:d33569fb3ab4ad37100135"
+};
+
+// ================= INITIALIZE FIREBASE =================
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+console.log("🔥 Khushi Firebase + Firestore connected");
+
+// ================= FETCH PORTFOLIO DATA =================
+async function loadPortfolioData() {
+  try {
+    const docRef = doc(db, "portfolio", "portfolio-dtls");
+    const docSnap = await getDoc(docRef);
+
+    if (!docSnap.exists()) {
+      console.error("❌ Portfolio document not found");
+      return;
+    }
+
+    const data = docSnap.data();
+    console.log("📦 Portfolio data:", data);
+
+    const homeH1 = document.querySelector("#home h1");
+    const homeP = document.querySelector("#home p");
+    const aboutP = document.querySelector("#about p");
+    const contactPs = document.querySelectorAll(".contact-info p");
+
+    if (data.name && homeH1) homeH1.innerText = data.name;
+    if (data.role && homeP) homeP.innerText = data.role;
+    if ((data.about || data.description) && aboutP) {
+      aboutP.innerText = data.about || data.description;
+    }
+
+    if (contactPs.length > 0) {
+      if (data.email && contactPs[0]) {
+        contactPs[0].innerHTML = `<i class="fas fa-envelope"></i> ${data.email}`;
+      }
+      if (data.phoneno && contactPs[1]) {
+        contactPs[1].innerHTML = `<i class="fas fa-phone"></i> ${data.phoneno}`;
+      }
+    }
+
+  } catch (error) {
+    console.error("❌ Error fetching portfolio data:", error);
+  }
+}
+
+// Load portfolio on page load
+loadPortfolioData();
+
+// ================= CONTACT FORM LOGIC =================
+const contactForm = document.querySelector("#contactForm");
+
+if (!contactForm) {
+  console.error("❌ Contact form not found (check id='contactForm')");
+} else {
+  const nameInput = contactForm.querySelector("input[name='name']");
+  const emailInput = contactForm.querySelector("input[name='email']");
+  const messageInput = contactForm.querySelector("textarea[name='message']");
+
+  contactForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const name = nameInput.value.trim();
+    const email = emailInput.value.trim();
+    const message = messageInput.value.trim();
+
+    if (!name || !email || !message) {
+      alert("Please fill all fields ❗");
+      return;
+    }
+
+    try {
+      console.log("📤 Sending message...", { name, email, message });
+
+      const docRef = await addDoc(collection(db, "messages"), {
+        name,
+        email,
+        message,
+        createdAt: serverTimestamp()
+      });
+
+      console.log("✅ Message saved with ID:", docRef.id);
+      alert("Message sent successfully ✅");
+
+      nameInput.value = "";
+      emailInput.value = "";
+      messageInput.value = "";
+
+    } catch (error) {
+      console.error("❌ Error saving message:", error);
+      alert("Failed to send message ❌");
+    }
+  });
+}
+
+</script>
+
+
+</body>
+</html>
