@@ -1,0 +1,299 @@
+
+/* ================= GENERAL ================= */
+* {
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+    scroll-behavior:smooth;
+}
+
+/* ================= BODY BACKGROUND ================= */
+body {
+    background:
+        radial-gradient(circle at top right, rgba(90, 140, 105, 0.35), transparent 40%),
+        radial-gradient(circle at bottom left, rgba(60, 110, 85, 0.35), transparent 45%),
+        linear-gradient(135deg, #0f2f23, #1f4d3a);
+    color:#e6f2ec;
+    min-height:100vh;
+}
+
+/* ================= HEADER ================= */
+header {
+    position:fixed;
+    top:0;
+    width:100%;
+    background:rgba(0,0,0,0.55);
+    backdrop-filter:blur(12px);
+    padding:12px 0;
+    z-index:1000;
+    transition:0.3s;
+}
+header:hover {
+    background:rgba(0,0,0,0.85);
+}
+
+.navbar {
+    max-width:1200px;
+    margin:auto;
+    padding:0 20px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+/* ================= LOGO ================= */
+.logo {
+    display:flex;
+    align-items:center;
+    gap:12px;
+    color:white;
+    font-size:20px;
+    font-weight:600;
+}
+
+.logo img {
+    width:48px;
+    height:48px;
+    border-radius:10px;
+    box-shadow:0 4px 12px rgba(255,255,255,0.25);
+}
+
+/* ================= NAV ================= */
+.nav-links a {
+    color:white;
+    text-decoration:none;
+    margin-left:25px;
+    font-size:18px;
+}
+.nav-links a:hover {
+    color:#ffdd57;
+}
+
+/* ================= SECTIONS ================= */
+section {
+    min-height:100vh;
+    padding:130px 10%;
+    margin:60px auto;
+    border-radius:28px;
+    max-width:1200px;
+    opacity:0;
+    transform:translateY(40px);
+    transition:0.8s ease;
+}
+section.show {
+    opacity:1;
+    transform:translateY(0);
+}
+
+h1 {
+    font-size:36px;
+    margin-bottom:20px;
+}
+p {
+    line-height:1.8;
+    margin-bottom:20px;
+}
+
+/* ================= HOME ================= */
+#home {
+    color:white;
+    text-align:center;
+    background:
+        linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)),
+        url("https://source.unsplash.com/1600x900/?technology,programming");
+    background-size:cover;
+    background-position:center;
+}
+
+/* Profile Image */
+.profile-container {
+    margin-top:35px;
+}
+.profile-container img {
+    width:100%;
+    max-width:360px;
+    border-radius:25px;
+    box-shadow:0 20px 40px rgba(0,0,0,0.45);
+    margin-bottom:20px;
+}
+
+/* ================= CV BUTTON ================= */
+.cv-button {
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    background:#e7d7c1;
+    color:#333;
+    padding:14px 30px;
+    border-radius:14px;
+    font-weight:600;
+    text-decoration:none;
+    transition:0.3s ease;
+    box-shadow:0 10px 25px rgba(255,221,87,0.6);
+}
+.cv-button:hover {
+    background:#ffc107;
+    transform:translateY(-3px) scale(1.05);
+    box-shadow:0 15px 35px rgba(255,193,7,0.9);
+}
+
+/* ================= ABOUT / SKILLS / INTEREST / CONTACT ================= */
+#about,
+#skills,
+#interest,
+#contact {
+    background:rgba(255,255,255,0.12);
+    backdrop-filter:blur(14px);
+    box-shadow:0 20px 40px rgba(0,0,0,0.25);
+    color:#ecfdf5;
+}
+
+/* ================= ABOUT ME SIDE-BY-SIDE ================= */
+.about-container {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    margin-top: 30px;
+    flex-wrap: wrap;
+}
+
+.about-text {
+    flex: 1;
+    font-size: 18px;
+    line-height: 1.8;
+}
+
+.about-image {
+    flex: 1;
+    text-align: center;
+}
+
+.about-image img {
+    width: 100%;
+    max-width: 360px;
+    border-radius: 25px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.45);
+}
+
+/* ================= SKILLS ================= */
+.skills-grid {
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:25px;
+    margin-top:30px;
+}
+
+.skill-card {
+    background:rgba(236,253,245,0.95);
+    color:#064e3b;
+    padding:20px;
+    border-radius:20px;
+    text-align:center;
+    font-weight:600;
+    font-size:18px;
+    transition:0.3s;
+}
+.skill-card:hover {
+    transform:translateY(-10px);
+    box-shadow:0 20px 40px rgba(0,0,0,0.25);
+}
+
+/* ================= INTEREST ================= */
+.interest-grid {
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+    gap:40px;
+    margin-top:40px;
+}
+
+.interest-card {
+    display:flex;
+    gap:25px;
+    background:rgba(236,253,245,0.95);
+    color:#064e3b;
+    padding:25px;
+    border-radius:22px;
+    align-items:center;
+    transition:0.4s;
+}
+.interest-card img {
+    width:140px;
+    height:140px;
+    border-radius:18px;
+}
+.interest-card:hover {
+    transform:translateY(-10px);
+    box-shadow:0 25px 45px rgba(0,0,0,0.25);
+}
+
+/* ================= CONTACT ================= */
+.contact-container {
+    display:flex;
+    gap:40px;
+    margin-top:40px;
+}
+
+/* Contact info */
+.contact-info {
+    flex:1;
+    background:rgba(236,253,245,0.95);
+    color:#064e3b;
+    padding:30px;
+    border-radius:22px;
+    box-shadow:0 20px 35px rgba(0,0,0,0.25);
+}
+.contact-info i {
+    color:#16a34a;
+    margin-right:10px;
+}
+
+/* Contact form */
+form {
+    flex:1;
+}
+input, textarea {
+    width:100%;
+    padding:14px;
+    margin:10px 0;
+    border-radius:12px;
+    border:none;
+}
+button {
+    background:#16a34a;
+    color:white;
+    border:none;
+    padding:14px 30px;
+    border-radius:14px;
+    cursor:pointer;
+    font-weight:600;
+    transition:0.3s;
+}
+button:hover {
+    background:#22c55e;
+    transform:translateY(-2px);
+}
+
+/* ================= FOOTER ================= */
+footer {
+    text-align:center;
+    padding:25px;
+    color:#ecfdf5;
+}
+
+/* ================= RESPONSIVE ================= */
+@media(max-width:768px) {
+    .contact-container {
+        flex-direction:column;
+    }
+    .about-container {
+        flex-direction: column;
+        text-align: center;
+    }
+    .about-text {
+        order: 2;
+    }
+    .about-image {
+        order: 1;
+    }
+}
